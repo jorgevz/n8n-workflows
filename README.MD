@@ -1,7 +1,7 @@
 # Terminal agent + prompts = n8n Automation Workflows
 
 
-This repo contains **high-precision AI agent prompts** and a library of **ready-to-import n8n workflow JSON files**.
+This repo contains **high-precision AI agent prompts** to generate **ready-to-import n8n workflow JSON files**.
 
 The goal is to make it easy to:
 1. Use a terminal AI agent as a **workflow engineer** to build production-ready n8n automations in JSON format.
