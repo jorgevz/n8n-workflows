@@ -1,0 +1,155 @@
+{
+  "name": "Golden Sample: webhook → http → transform → respond (+error path)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "golden/sample",
+        "responseMode": "responseNode",
+        "options": {
+          "responseData": "OK",
+          "responseCode": 200
+        }
+      },
+      "id": "Webhook_1",
+      "name": "trigger-webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "requestMethod": "GET",
+        "url": "https://api.example.com/resource",
+        "jsonParameters": true,
+        "sendQuery": true,
+        "queryParametersJson": "={\"id\":\"{{$json[\"id\"] || $json[\"body\"]?.id}}\"}",
+        "options": {
+          "timeout": 30000,
+          "retryOnFail": true,
+          "maxRetries": 3,
+          "ignoreResponseCode": false,
+          "responseFormat": "json"
+        }
+      },
+      "id": "HttpRequest_1",
+      "name": "fetch-resource",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "CRED_API_KEY_HEADER"
+        }
+      },
+      "position": [580, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            { "name": "resourceId", "value": "={{$json[\"data\"]?.id || $json?.id}}" },
+            { "name": "status", "value": "success" }
+          ],
+          "number": [
+            { "name": "total", "value": "={{$json[\"data\"]?.total || 0}}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "Set_1",
+      "name": "transform-set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "responseBody": "={{$json}}",
+        "responseCode": 200
+      },
+      "id": "Respond_1",
+      "name": "respond-success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1180, 300]
+    },
+    {
+      "parameters": {},
+      "id": "ErrorTrigger_1",
+      "name": "on-error",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [580, 520]
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@example.com",
+        "toEmail": "ops@example.com",
+        "options": {
+          "allowUnauthorizedCerts": false
+        },
+        "subject": "n8n workflow failed: {{$json.workflow.name}}",
+        "text": "Execution ID: {{$json.execution.id}}\nError: {{$json.error.message}}\nNode: {{$json.node.name}}\nTime: {{$json.timestamp}}"
+      },
+      "id": "Email_1",
+      "name": "notify-failure",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "credentials": {
+        "smtp": {
+          "id": "",
+          "name": "CRED_SMTP"
+        }
+      },
+      "position": [900, 520]
+    },
+    {
+      "parameters": {
+        "responseBody": "={\"status\":\"error\",\"message\":$json[\"error\"]?.message || \"Unknown error\"}",
+        "responseCode": 500
+      },
+      "id": "Respond_2",
+      "name": "respond-failure",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1180, 520]
+    }
+  ],
+  "connections": {
+    "trigger-webhook": {
+      "main": [
+        [{ "node": "fetch-resource", "type": "main", "index": 0 }]
+      ]
+    },
+    "fetch-resource": {
+      "main": [
+        [{ "node": "transform-set", "type": "main", "index": 0 }]
+      ]
+    },
+    "transform-set": {
+      "main": [
+        [{ "node": "respond-success", "type": "main", "index": 0 }]
+      ]
+    },
+    "on-error": {
+      "main": [
+        [{ "node": "notify-failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "notify-failure": {
+      "main": [
+        [{ "node": "respond-failure", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true
+  },
+  "staticData": {},
+  "pinData": {}
+}
