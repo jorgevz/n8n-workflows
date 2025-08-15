@@ -12,23 +12,23 @@ The goal is to make it easy to:
 ---
 
 ## Repository Structure
-
+```
 n8n/
 ├── prompts/
-│ ├── n8n_Build_Captain.md
-│ ├── n8n_QA_Compliance.md
-│ └── n8n_Security_Architect.md
+│   ├── n8n_Build_Captain.md
+│   ├── n8n_QA_Compliance.md
+│   └── n8n_Security_Architect.md
 │
 ├── workflows/
-│ ├── workflow-1.json
-│ ├── workflow-2.json
+│   ├── workflow-1.json
+│   ├── workflow-2.json
 │
 ├── samples/
-│ ├── n8n_sample.json
-│ └── (future ones samples here)
+│   ├── n8n_sample.json
+│   └── (future ones samples here)
 │
 └── README.md
-
+```
 
 
 ---
