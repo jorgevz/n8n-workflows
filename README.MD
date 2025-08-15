@@ -54,9 +54,19 @@ Contains **three specialized Claude Code system prompts**:
 ---
 
 ### `workflows/`
-- This is where **all importable `.json` n8n workflows** live.
+- This is where **all importable `.json` n8n workflows** live for you.
 - Each JSON file should be valid for **direct import** into n8n via UI or CLI.
-- Filenames should be descriptive (`verb-object.json`) so they can be understood at a glance.
+- These files are to remain private for your own use and not to be committed.  If you wish to share workflows for the community you can place that `.json` file into the templates directory through a PR. Please remember to not share any of your secrets or private keys with your workflow. Once reviewed it will be merged. 
+
+---
+
+### `templates/`
+
+- The `Templates` directory contains community-contributed workflow JSON files.  
+If you’ve created a workflow you’d like to share, submit it via a Pull Request (PR) with your JSON file placed in the `Templates` directory.  
+
+- All submissions are reviewed before being merged to ensure quality and functionality.  
+Once approved, your workflow will be available for others to use and adapt.
 
 ---
 
