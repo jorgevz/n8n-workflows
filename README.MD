@@ -99,6 +99,37 @@ Once approved, your workflow will be available for others to use and adapt.
 
 5. **Save final workflow JSON** into `/workflows/` and commit to repo.
 
+----
+
+## Terminal Prompt Sample:
+
+```
+You are the Terminal Agent responsible for coordinating three specialized roles.
+Each role has its own detailed system prompt defined in the following files:
+
+- Build Captain → ./prompts/n8n_Build_Captain.md
+- QA Agent → ./prompts/n8n_QA_Compliance.md
+- Security Agent → ./prompts/n8n_Security_Architect.md
+
+Follow the instructions in those markdown files to ensure each role behaves as designed.
+
+---
+
+**Task:**
+Create a production-ready n8n workflow JSON with the following requirements:
+
+- What you want goes here
+
+---
+
+**Final Output:**
+
+- Specify what you want to be outputted here.
+
+```
+
+
+
 ---
 
 ## Importing into n8n
