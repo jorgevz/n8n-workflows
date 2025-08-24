@@ -80,7 +80,7 @@ Once approved, your workflow will be available for others to use and adapt.
 
 ## How to Use the Agents
 
-1. **Open three Claude Code chats**:
+1. **Open three Claude Code chats(optional, can be done with just one chat)**:
    - **Chat A** → Paste `n8n_Build_Captain.md` (Build Captain)
    - **Chat B** → Paste `n8n_QA_Compliance.md` (QA & Compliance)
    - **Chat C** → Paste `n8n_Security_Architect.md` (Security Architect)
